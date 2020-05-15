@@ -7,19 +7,22 @@ const Statistics = (props) => {
     return <p>No feedback given</p>
   }
 
-  return <p>
+  return <p><table>
   <StatisticLine text="good" value ={props.good}  /> 
   <StatisticLine text="bad" value ={props.bad}  /> 
   <StatisticLine text="neutral" value ={props.neutral}  /> 
   <StatisticLine text="all" value ={props.all}  /> 
   <StatisticLine text="average" value ={props.average}  /> 
   <StatisticLine text="positive" value ={props.positive}  /> 
-  </p>
+  </table></p>
 }
 
 
 const StatisticLine= ({ text, value }) => (
-  <string> {text} {value} <br/></string>
+  <tr>
+    <td> {text} </td> 
+    <td> {value} </td> 
+  </tr>
 )
 
 const App = () => {
