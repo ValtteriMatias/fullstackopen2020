@@ -10,6 +10,7 @@ const Button = ({ onClick, text }) => (
 const App = (props) => {
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState([0,0,0,0,0,0])
+  const [popular, setPopular] = useState(0)
 
   const random = () => {
       var maxNumber = anecdotes.length;
@@ -21,15 +22,27 @@ const App = (props) => {
     const copy = [...votes]
     copy[selected] += 1 
     setVotes(copy)
-}
+    highScore()
+  }
+
+  const highScore = () => {
+    let biggest = 0;
+      for (let i = 1; i < votes.length; i++ ) { 
+        if ( votes[i] > votes[biggest] ) biggest = i;
+      }
+    setPopular(biggest)
+  }
 
   return (
     <div>
+      <h2>Anecdote of the day</h2>
       {props.anecdotes[selected]} <br/> has {votes[selected]} votes
       <br/>
       <Button onClick={vote} text='vote' />
       <Button onClick={random} text='next anecdote' />
-      
+      <h2>Anecdote with the most votes</h2>
+      {props.anecdotes[popular]} <br/> has {votes[popular]} votes
+
     </div>
   )
 }
