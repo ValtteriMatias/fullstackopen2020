@@ -9,6 +9,7 @@ const Button = ({ onClick, text }) => (
 
 const App = (props) => {
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState([0,0,0,0,0,0])
 
   const random = () => {
       var maxNumber = anecdotes.length;
@@ -16,11 +17,19 @@ const App = (props) => {
     setSelected(randomNumber)
   }
 
+  const vote = () => {
+    const copy = [...votes]
+    copy[selected] += 1 
+    setVotes(copy)
+}
+
   return (
     <div>
-      {props.anecdotes[selected]}
+      {props.anecdotes[selected]} <br/> has {votes[selected]} votes
       <br/>
+      <Button onClick={vote} text='vote' />
       <Button onClick={random} text='next anecdote' />
+      
     </div>
   )
 }
