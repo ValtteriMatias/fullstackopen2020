@@ -7,15 +7,20 @@ const Statistics = (props) => {
     return <p>No feedback given</p>
   }
 
-  return <p>good {props.good} <br /> 
-  neutral {props.neutral} <br /> 
-  bad {props.bad} <br /> 
-  all {props.allFeedback} <br/>
-  average {props.average} <br/>
-  positive {props.positive} % <br/>
-  </p> 
+  return <p>
+  <StatisticLine text="good" value ={props.good}  /> 
+  <StatisticLine text="bad" value ={props.bad}  /> 
+  <StatisticLine text="neutral" value ={props.neutral}  /> 
+  <StatisticLine text="all" value ={props.all}  /> 
+  <StatisticLine text="average" value ={props.average}  /> 
+  <StatisticLine text="positive" value ={props.positive}  /> 
+  </p>
 }
 
+
+const StatisticLine= ({ text, value }) => (
+  <string> {text} {value} <br/></string>
+)
 
 const App = () => {
   // tallenna napit omaan tilaansa 
@@ -58,6 +63,7 @@ const App = () => {
     </button>
   )
 
+
   return (
     <div>
       <h2>give feedback</h2>   
@@ -66,6 +72,7 @@ const App = () => {
         <Button onClick={handleBadClick} text='bad' />
         <Statistics good={good} bad={bad} neutral={neutral} allFeedback={allFeedback} average={average} positive={positive}   />
     </div>
+    
   )
 }
 
