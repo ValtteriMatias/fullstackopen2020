@@ -1,6 +1,41 @@
 import React, { useState } from 'react'
 import Person from './components/Person'
 
+
+const Filter = ( props ) => {
+  return (
+  <form>
+      <div>
+        filter shown filter: <input
+          value={props.filter} 
+          onChange={props.handleFilterChange} 
+          />
+      </div>
+  </form>
+  )
+}
+
+
+const PersonForm = (props) => {
+  return (
+  <form onSubmit={props.addName}>
+        <div>
+          name: <input
+            value={props.newName} 
+            onChange={props.handleNameChange} 
+            />
+        </div>
+          number: <input 
+            value={props.newNumber} 
+            onChange={props.handleNumberChange} 
+            />
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+  )
+}
+
 const App = (props) => {
   const [ persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
@@ -10,7 +45,7 @@ const App = (props) => {
   ]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
-  const [filter, setFilter] = useState('Ad')
+  const [filter, setFilter] = useState('')
 
   const addName = (event) => {
     event.preventDefault()
@@ -51,37 +86,16 @@ const App = (props) => {
     <div>
       <h2>Phonebook</h2>
       <div>
-        <form>
-          <div>
-            filter shown filter: <input
-              value={filter} 
-              onChange={handleFilterChange} 
-              />
-          </div>
-        </form>
+        <Filter filter={filter} handleFilterChange={handleFilterChange} />
       </div>
       <h2>add a new</h2>
-      <form onSubmit={addName}>
-        <div>
-          name: <input
-            value={newName} 
-            onChange={handleNameChange} 
-            />
-        </div>
-          number: <input 
-            value={newNumber} 
-            onChange={handleNumberChange} 
-            />
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      
+        <PersonForm addName={addName} 
+          newName = {newName} 
+          handleNameChange = {handleNameChange} 
+          newNumber = {newNumber} 
+          handleNumberChange = {handleNumberChange} />
       <h2>Numbers</h2>
-         {numbersToShow.map((person, i) =>
-          <Person key={i} person={person} />
-        )}
-      
+        {numbersToShow.map((person, i) => <Person key={i} person={person} />)}
     </div>
   )
 
