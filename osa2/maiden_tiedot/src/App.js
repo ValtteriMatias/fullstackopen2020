@@ -16,13 +16,7 @@ const Filter = ( props ) => {
   )
 }
 
-const Country10 = ({ country }) => {
-  return (
-    <div>
-      <h2>{country.name} </h2>
-    </div>
-  )
-}
+
 
 const App = (props) => {
   const [ countries, setCountries] = useState([]) 
@@ -45,7 +39,23 @@ const App = (props) => {
     setFilter(event.target.value)
   }
 
+  const handleClick = (country) => {
+    setFilter(country.name)
+    
+  }
+
   const countriesToShow = countries.filter(country => country.name.toUpperCase().includes(filter.toUpperCase()))
+
+  const Country10 = ({ country }) => {
+
+    console.log(country)
+    return (
+      <p>
+        {country.name} <button onClick={() => handleClick(country)}>show</button>
+      </p>
+    )
+    
+  }
   
   const DisplayCountries = () => {
     if (countriesToShow.length > 10) {
