@@ -81,11 +81,25 @@ const App = (props) => {
       }, 5000)
     }
     else {
-      if (window.confirm(upNum[0].name + " is already added to phonebook, replace the old number wiht a new one?")){
+      if (window.confirm(upNum[0].name + " is already added to phonebook, replace the old number with a new one?")){
       personService
       .update(upNum[0].id, nameObject)
       .then(response => {
         setPersons(persons.map(person => person.name !== nameObject.name ? person : response))
+      })
+      .catch(error => {
+        setErrorMessage(
+          `Information of '${upNum[0].name}' was already deleted from server`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+        personService
+          .deleteNumber(upNum[0].id)
+          .then(returnedNote => {
+            setPersons(persons.filter(n => n.id !== upNum[0].id))
+          })
+        
       })
       setErrorMessage(
         `Updated ${nameObject.name}:s phonenumber! `
