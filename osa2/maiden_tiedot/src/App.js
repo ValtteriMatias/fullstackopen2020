@@ -19,11 +19,11 @@ const Filter = ( props ) => {
 
 
 const App = (props) => {
-  const [ countries, setCountries] = useState([]) 
+  const [countries, setCountries] = useState([]) 
   const [filter, setFilter] = useState('')
+  const [weather, setWeather] = useState('1')
 
   useEffect(() => {
-    console.log('effect')
     axios
       .get('https://restcountries.eu/rest/v2/all')
       .then(response => {
@@ -32,7 +32,15 @@ const App = (props) => {
       })
   }, [])
 
-  console.log('render', countries.length, 'notes')
+  useEffect(() => {
+    axios
+      .get('http://api.weatherstack.com/current?access_key=' + process.env.REACT_APP_API_key + '&query=helsinki')
+      .then(response => {
+        console.log('promise fulfilled')
+        console.log(response.data.current.temperature)
+        setWeather(response.data.current.temperature)
+      })
+  }, [])
 
   const handleFilterChange = (event) => {
     console.log(event.target.value)
@@ -47,14 +55,22 @@ const App = (props) => {
   const countriesToShow = countries.filter(country => country.name.toUpperCase().includes(filter.toUpperCase()))
 
   const Country10 = ({ country }) => {
-
-    console.log(country)
     return (
       <p>
         {country.name} <button onClick={() => handleClick(country)}>show</button>
       </p>
     )
     
+  }
+
+  const handleWeatherChange = (props) => {
+      axios
+        .get('http://api.weatherstack.com/current?access_key=' + process.env.REACT_APP_API_key + '&query=helsinki')
+        .then(response => {
+          console.log('promise fulfilled')
+          console.log(response.data.current.temperature)
+          setWeather(response.data.current.temperature)
+        })
   }
   
   const DisplayCountries = () => {
@@ -64,7 +80,17 @@ const App = (props) => {
     if (countriesToShow.length > 1){
       return ( <div> {countriesToShow.map((country, i) => <Country10 key={i} country={country} />)} </div>) 
     }
-    return ( <div> {countriesToShow.map((country, i) => <Country key={i} country={country} />)} </div>) 
+    if (countriesToShow.length = 1){
+    console.log(countriesToShow[0])
+    axios
+        .get('http://api.weatherstack.com/current?access_key=' + process.env.REACT_APP_API_key + '&query=berlin' )
+        .then(response => {
+          console.log('promise fulfilled')
+          console.log(response.data.current.temperature)
+          setWeather(response.data.current.temperature)
+        })
+    return ( <div> {countriesToShow.map((country, i) => <Country key={i} country={country} weather={weather} />) }</div>) 
+    }
 
   }
 
