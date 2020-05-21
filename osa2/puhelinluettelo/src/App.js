@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Person from './components/Person'
 import personService from './services/persons'
+import Notification from './components/Notification'
 
 
 const Filter = ( props ) => {
@@ -42,6 +43,7 @@ const App = (props) => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [filter, setFilter] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     personService
@@ -70,6 +72,13 @@ const App = (props) => {
         setNewName('')
         setNewNumber('')
       })
+      console.log(errorMessage)
+      setErrorMessage(
+        `Added ${nameObject.name} `
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
     else {
       if (window.confirm(upNum[0].name + " is already added to phonebook, replace the old number wiht a new one?")){
@@ -78,6 +87,13 @@ const App = (props) => {
       .then(response => {
         setPersons(persons.map(person => person.name !== nameObject.name ? person : response))
       })
+      setErrorMessage(
+        `Updated ${nameObject.name}:s phonenumber! `
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000) 
+
     }
     }
   }
@@ -104,6 +120,12 @@ const App = (props) => {
       .then(returnedNote => {
         setPersons(persons.filter(n => n.id !== person.id))
       })
+      setErrorMessage(
+        `Deleted ${person.name} `
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
 
   }
@@ -114,6 +136,7 @@ const App = (props) => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
       <div>
         <Filter filter={filter} handleFilterChange={handleFilterChange} />
       </div>
