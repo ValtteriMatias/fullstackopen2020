@@ -38,12 +38,7 @@ const PersonForm = (props) => {
 }
 
 const App = (props) => {
-  const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ]) 
+  const [ persons, setPersons] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [filter, setFilter] = useState('')
@@ -95,6 +90,17 @@ const App = (props) => {
     setFilter(event.target.value)
   }
 
+  const handleClick = (person) => {
+    if (window.confirm("Do you really want to delete " + person.name + "?")) { 
+    personService
+      .deleteNumber(person.id)
+      .then(returnedNote => {
+        setPersons(persons.filter(n => n.id !== person.id))
+      })
+    }
+
+  }
+
   const numbersToShow = persons.filter(person => person.name.toUpperCase().includes(filter.toUpperCase()))
 
 
@@ -111,7 +117,7 @@ const App = (props) => {
           newNumber = {newNumber} 
           handleNumberChange = {handleNumberChange} />
       <h2>Numbers</h2>
-        {numbersToShow.map((person, i) => <Person key={i} person={person} />)}
+        {numbersToShow.map((person, i) => <Person key={i} person={person} handleClick={handleClick} />)}
     </div>
   )
 
