@@ -61,6 +61,7 @@ const App = (props) => {
       number: newNumber
     }
     const names = persons.map((person) => person.name);
+    const upNum = persons.filter((n => n.name === nameObject.name))
     if ( !( names.includes(newName) ) ) {
       personService
       .create(nameObject)
@@ -71,7 +72,13 @@ const App = (props) => {
       })
     }
     else {
-      window.alert(`${newName} is already added to phonebook`);
+      if (window.confirm(upNum[0].name + " is already added to phonebook, replace the old number wiht a new one?")){
+      personService
+      .update(upNum[0].id, nameObject)
+      .then(response => {
+        setPersons(persons.map(person => person.name !== nameObject.name ? person : response))
+      })
+    }
     }
   }
 
