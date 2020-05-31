@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Person from './components/Person'
 import personService from './services/persons'
 import Notification from './components/Notification'
-
+import ErrorMsg from './components/ErrorMsg'
 
 const Filter = ( props ) => {
   return (
@@ -44,6 +44,7 @@ const App = (props) => {
   const [ newNumber, setNewNumber ] = useState('')
   const [filter, setFilter] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     personService
@@ -72,12 +73,18 @@ const App = (props) => {
         setNewName('')
         setNewNumber('')
       })
+      .catch(error => {
+        console.log(error.response.data)
+        setErrorMessage(error.response.data.error)
+        setNotification(null)
+      })
       console.log(errorMessage)
-      setErrorMessage(
-        `Added ${nameObject.name} `
+      setNotification(
+        `Added j ${nameObject.name} `
       )
       setTimeout(() => {
         setErrorMessage(null)
+        setNotification(null)
       }, 5000)
     }
     else {
@@ -101,11 +108,11 @@ const App = (props) => {
           })
         
       })
-      setErrorMessage(
+      setNotification(
         `Updated ${nameObject.name}:s phonenumber! `
       )
       setTimeout(() => {
-        setErrorMessage(null)
+        setNotification(null)
       }, 5000) 
 
     }
@@ -134,11 +141,11 @@ const App = (props) => {
       .then(returnedNote => {
         setPersons(persons.filter(n => n.id !== person.id))
       })
-      setErrorMessage(
+      setNotification(
         `Deleted ${person.name} `
       )
       setTimeout(() => {
-        setErrorMessage(null)
+        setNotification(null)
       }, 5000)
     }
 
@@ -150,7 +157,8 @@ const App = (props) => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={errorMessage} />
+      <ErrorMsg message={errorMessage} />
+      <Notification message={notification} />
       <div>
         <Filter filter={filter} handleFilterChange={handleFilterChange} />
       </div>
