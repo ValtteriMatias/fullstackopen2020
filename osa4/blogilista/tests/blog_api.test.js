@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable indent */
 /* eslint-disable no-undef */
 
@@ -72,4 +73,20 @@ test('there are three notes', async () => {
 test('id is id and not _id', async () => {
   const response = await api.get('/api/blogs')
   expect(response.body[0].id).toBeDefined()
+})
+
+
+test('post works', async () => {
+
+  const postedBlog = {
+    title: 'autoblogi :D',
+    author: 'Kalle',
+    url: 'notäätoinen',
+    likes: 8
+  }
+
+
+  const request = await api.post('/api/blogs', postedBlog)
+  const response = await api.get('/api/blogs')
+  expect(response.body).toHaveLength(4)
 })
