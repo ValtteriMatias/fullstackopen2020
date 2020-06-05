@@ -113,3 +113,40 @@ test('Likes is iniatialized to 0 if value not given', async () => {
   console.log(response.body)
   expect(response.body[response.body.length-1].likes).toEqual(0)
 })
+
+test('url missing', async () => {
+
+  const postedBlog = {
+    title: 'autoblogi :D',
+    author: 'Kalle',
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(postedBlog)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+  const response = await api.get('/api/blogs')
+  console.log(response.body)
+  expect(response.body).toHaveLength(3)
+
+})
+
+
+test('title missing', async () => {
+
+  const postedBlog = {
+    author: 'Kalle',
+    url: 'www.bemaritonparhaita.com'
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(postedBlog)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+  const response = await api.get('/api/blogs')
+  console.log(response.body)
+  expect(response.body).toHaveLength(3)
+
+})
