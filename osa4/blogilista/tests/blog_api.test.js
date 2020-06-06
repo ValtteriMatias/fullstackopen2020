@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 const api = supertest(app)
 
@@ -179,5 +180,3 @@ test('updating likes is succesfull', async () => {
   expect(response.body[1].likes).toEqual(900)
 
 })
-
-
