@@ -150,3 +150,15 @@ test('title missing', async () => {
   expect(response.body).toHaveLength(3)
 
 })
+
+test('delete is succesfull', async () => {
+
+  const start = await api.get('/api/blogs')
+  await api
+    .delete(`/api/blogs/${start.body[1].id}`)
+    .expect(204)
+  const response = await api.get('/api/blogs')
+  console.log(response.body)
+  expect(response.body.length).toBeLessThan(start.body.length)
+
+})
