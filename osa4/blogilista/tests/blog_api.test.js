@@ -162,3 +162,22 @@ test('delete is succesfull', async () => {
   expect(response.body.length).toBeLessThan(start.body.length)
 
 })
+
+test('updating likes is succesfull', async () => {
+
+  const updatedBlog = {
+    likes: 900
+  }
+
+  const start = await api.get('/api/blogs')
+  await api
+    .put(`/api/blogs/${start.body[1].id}`)
+    .send(updatedBlog)
+    .expect(200)
+  const response = await api.get('/api/blogs')
+  console.log(response.body)
+  expect(response.body[1].likes).toEqual(900)
+
+})
+
+
