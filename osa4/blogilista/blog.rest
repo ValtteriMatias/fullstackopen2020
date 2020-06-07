@@ -1,10 +1,10 @@
-POST https://localhost:3001/api/blogs/
+POST http://localhost:3001/api/blogs/
 
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVrYWkiLCJpZCI6IjVlZGQxNDg3YjQ2NGI4NWY4M2UwYzE3YiIsImlhdCI6MTU5MTU1MDgxMH0.qRA3f1d3p-daopW8HuCjHu9Kprl7pjJyVBmgawX0RA8
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVrYWkiLCJpZCI6IjVlZGQxNDg3YjQ2NGI4NWY4M2UwYzE3YiIsImlhdCI6MTU5MTU1NDIyNX0.eDL_nw-DEmSEG5VMK0Jo-FTOwzotzxyvnYL84rZdpjU
 
 {
-  "title": "Ruokablogi2",
+  "title": "Ruokabjhgfhgjhlogi2",
   "author": "Kalle Neptunus",
   "url": "notää.com",
   "likes": 8
