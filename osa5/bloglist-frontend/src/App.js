@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login' 
+import Notification from './components/Notification'
+
 
 
 const App = () => {
@@ -51,6 +53,13 @@ const App = () => {
         setNewBlogLikes(0)
         setNewBlogUrl('')
         setNewBlogTitle('')
+        if (returnedBlog) {
+          setErrorMessage(`Blog ${returnedBlog.title} was added succefully`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        
+        }
       })
   }
 
@@ -68,6 +77,10 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+      setErrorMessage(`Login succesful`)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     } catch (exception) {
       setErrorMessage('wrong credentials')
       setTimeout(() => {
@@ -170,6 +183,7 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={errorMessage} />
       {user === null ? 
       loginForm() :
       blogsSchedule()
