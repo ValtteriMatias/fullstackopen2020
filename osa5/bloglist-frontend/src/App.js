@@ -9,10 +9,6 @@ import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newBlogTitle, setNewBlogTitle] = useState('')
-  const [newBlogAuthor, setNewBlogAuthor] = useState('')
-  const [newBlogUrl, setNewBlogUrl] = useState('')
-  const [newBlogLikes, setNewBlogLikes] = useState(0)
   const [blogFormVisible, setBlogFormVisible] = useState(false)
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
@@ -38,23 +34,11 @@ const App = () => {
     }
   }, [])
 
-  const addBlog = (event) => {
-    event.preventDefault()
-    const blogObject = {
-      title: newBlogTitle,
-      author: newBlogAuthor,
-      url: newBlogUrl,
-      likes: newBlogLikes
-    }
-  
+  const addBlog = (blogObject) => {
     blogService
       .create(blogObject)
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))
-        setNewBlogAuthor('')
-        setNewBlogLikes(0)
-        setNewBlogUrl('')
-        setNewBlogTitle('')
         setBlogFormVisible(false)
         if (returnedBlog) {
           setErrorMessage(`Blog ${returnedBlog.title} was added succefully`)
@@ -92,21 +76,7 @@ const App = () => {
     }
   }
 
-  const handleBlogTitleChange = (event) => {
-    setNewBlogTitle(event.target.value)
-  }
-
-  const handleBlogAuthorChange = (event) => {
-    setNewBlogAuthor(event.target.value)
-  }
-
-  const handleBlogUrlChange = (event) => {
-    setNewBlogUrl(event.target.value)
-  }
-
-  const handleBlogLikesChange = (event) => {
-    setNewBlogLikes(event.target.value)
-  }
+  
 
   const loginForm = () => (
     <div>
@@ -159,14 +129,6 @@ const App = () => {
         <div style={showWhenVisible}>
           <BlogForm
             addBlog={addBlog}
-            newBlogTitle={newBlogTitle}
-            newBlogAuthor={newBlogAuthor}
-            newBlogUrl={newBlogUrl}
-            newBlogLikes={newBlogLikes}
-            handleBlogTitleChange={handleBlogTitleChange}
-            handleBlogAuthorChange={handleBlogAuthorChange}
-            handleBlogUrlChange={handleBlogUrlChange}
-            handleBlogLikesChange={handleBlogLikesChange}
           />
 
         <button onClick={() => setBlogFormVisible(false)}>cancel</button>
