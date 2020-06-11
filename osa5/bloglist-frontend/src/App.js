@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login' 
 import Notification from './components/Notification'
+import BlogForm from './components/BlogForm'
 
 
 
@@ -12,6 +13,7 @@ const App = () => {
   const [newBlogAuthor, setNewBlogAuthor] = useState('')
   const [newBlogUrl, setNewBlogUrl] = useState('')
   const [newBlogLikes, setNewBlogLikes] = useState(0)
+  const [blogFormVisible, setBlogFormVisible] = useState(false)
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('') 
@@ -53,6 +55,7 @@ const App = () => {
         setNewBlogLikes(0)
         setNewBlogUrl('')
         setNewBlogTitle('')
+        setBlogFormVisible(false)
         if (returnedBlog) {
           setErrorMessage(`Blog ${returnedBlog.title} was added succefully`)
           setTimeout(() => {
@@ -133,53 +136,48 @@ const App = () => {
     </div>      
   )
 
-  const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <p>Title</p>
-      <input
-        value={newBlogTitle}
-        onChange={handleBlogTitleChange}
-      /> 
-      <p>Author</p>
-      <input
-        value={newBlogAuthor}
-        onChange={handleBlogAuthorChange}
-      /> 
-      <p>Url</p>
-      <input
-        value={newBlogUrl}
-        onChange={handleBlogUrlChange}
-      /> 
-      <p>Likes</p>
-      <input
-        value={newBlogLikes}
-        onChange={handleBlogLikesChange}
-      />
-      <br/>
-      <br/>
-      <button type="submit">save</button>
-    </form>  
-  )
-
   const handleClick = () => (
       setUser(null),
       window.localStorage.clear()
   )
 
 
-  const blogsSchedule = () => (
+  const blogsSchedule = () => {
+
+    const hideWhenVisible = { display: blogFormVisible ? 'none' : '' }
+    const showWhenVisible = { display: blogFormVisible ? '' : 'none' }
+
+    return(
     <div>
       <p> {user.name} logged in </p> 
       <button onClick={handleClick}> Log out! </button>
-      {blogForm()}
+      <br/>
+      <br/>
+      <div style={hideWhenVisible}>
+          <button onClick={() => setBlogFormVisible(true)}>Add Blog!</button>
+        </div>
+        <div style={showWhenVisible}>
+          <BlogForm
+            addBlog={addBlog}
+            newBlogTitle={newBlogTitle}
+            newBlogAuthor={newBlogAuthor}
+            newBlogUrl={newBlogUrl}
+            newBlogLikes={newBlogLikes}
+            handleBlogTitleChange={handleBlogTitleChange}
+            handleBlogAuthorChange={handleBlogAuthorChange}
+            handleBlogUrlChange={handleBlogUrlChange}
+            handleBlogLikesChange={handleBlogLikesChange}
+          />
+
+        <button onClick={() => setBlogFormVisible(false)}>cancel</button>
+      </div>  
      <h2>blogs</h2>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
     </div>
-
-  )
-
+    )
+  }
 
   return (
     <div>
@@ -187,14 +185,10 @@ const App = () => {
       {user === null ? 
       loginForm() :
       blogsSchedule()
-      
-
+    
       }
     </div>
   )
-
-
-
 
 }
 
