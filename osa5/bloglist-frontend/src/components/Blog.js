@@ -1,7 +1,13 @@
 import React, {useState} from 'react'
 
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, updateBlog }) => {
+
+  
+
+
+
+
   const [show, setShow] = useState(false)
   
   const showWhenVisible = { display: show ? '' : 'none' }
@@ -17,12 +23,17 @@ const Blog = ({ blog }) => {
     borderRadius: 5,
     marginBotttom: 10
   }
+  const update = () => {
+    updateBlog(blog.id)
+
+  }
+
 
   return (
     <div style={blogStyle}>
       {blog.title} <button onClick={() => {setShow(!show)}}> {label}</button>
       <div style={showWhenVisible}>
-        {blog.author} <br/> {blog.url} <br/>{blog.likes} <button > Like </button>
+        {blog.author} <br/> {blog.url} <br/>{blog.likes} <button onClick={update}> Like </button>
        </div>
     </div>
   )

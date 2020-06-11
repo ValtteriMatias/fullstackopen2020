@@ -10,7 +10,6 @@ import BlogForm from './components/BlogForm'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [blogFormVisible, setBlogFormVisible] = useState(false)
-  const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('')
@@ -47,6 +46,26 @@ const App = () => {
           }, 5000)
         
         }
+      })
+  }
+
+  const updateBlog = (id) => {
+    const blog = blogs.find(n => n.id === id)
+
+    const changedBlog = { ...blog, likes: blog.likes + 1 }
+
+    blogService
+      .update(id, changedBlog)
+      .then(returnedBlog => {
+        setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+      })
+      .catch(() => {
+        setErrorMessage(
+          `Note '${blog.content}' was already removed from server`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
       })
   }
 
@@ -135,11 +154,12 @@ const App = () => {
       </div>  
      <h2>blogs</h2>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog}  updateBlog={updateBlog}/>
       )}
     </div>
     )
   }
+
 
   return (
     <div>
