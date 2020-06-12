@@ -30,9 +30,9 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
 
   return (
     <div style={blogStyle}>
-      {blog.title} <button onClick={() => {setShow(!show)}}> {label}</button>
-      <div style={showWhenVisible}>
-        {blog.author} <br/> {blog.url} <br/>{blog.likes} <button onClick={update}> Like </button> <br/> <br/> <button onClick={delBlog}> Delete </button>
+      {blog.title} {blog.author} <button onClick={() => {setShow(!show)}}> {label}</button>
+      <div style={showWhenVisible} className='allInfo'>
+        {blog.url} <br/>{blog.likes} <button onClick={update}> Like </button> <br/> <br/> <button onClick={delBlog}> Delete </button>
       </div>
     </div>
   )
