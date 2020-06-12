@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
-import loginService from './services/login' 
+import loginService from './services/login'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
 
@@ -11,16 +11,16 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [blogFormVisible, setBlogFormVisible] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
-  const [username, setUsername] = useState('') 
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  
+
 
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
 
@@ -44,19 +44,19 @@ const App = () => {
           setTimeout(() => {
             setErrorMessage(null)
           }, 5000)
-        
+
         }
       })
   }
 
   const deleteBlog = (blog) => {
 
-    if (window.confirm("Do you really want to delete " + blog.title + "?")) { 
-    blogService
-      .deleteBlog(blog.id)
-      .then(
-        setBlogs(blogs.filter(n => n.id !== blog.id))
-      )
+    if (window.confirm('Do you really want to delete ' + blog.title + '?')) {
+      blogService
+        .deleteBlog(blog.id)
+        .then(
+          setBlogs(blogs.filter(n => n.id !== blog.id))
+        )
       setErrorMessage(
         `Deleted ${blog.title} `
       )
@@ -64,11 +64,11 @@ const App = () => {
         setErrorMessage(null)
       }, 5000)
     }
-  
- }
+
+  }
 
 
-const updateBlog = (id) => {
+  const updateBlog = (id) => {
     const blog = blogs.find(n => n.id === id)
 
     const changedBlog = { ...blog, likes: blog.likes + 1 }
@@ -87,7 +87,7 @@ const updateBlog = (id) => {
         }, 5000)
       })
   }
-  
+
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -103,7 +103,7 @@ const updateBlog = (id) => {
       setUser(user)
       setUsername('')
       setPassword('')
-      setErrorMessage(`Login succesful`)
+      setErrorMessage('Login succesful')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -115,39 +115,39 @@ const updateBlog = (id) => {
     }
   }
 
-  
+
 
   const loginForm = () => (
     <div>
 
-    <form onSubmit={handleLogin}>
-      <div>
-      <h2>Login</h2>
+      <form onSubmit={handleLogin}>
+        <div>
+          <h2>Login</h2>
         username
           <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
+            type="text"
+            value={username}
+            name="Username"
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </div>
+        <div>
         password
           <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
-    </div>      
+            type="password"
+            value={password}
+            name="Password"
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <button type="submit">login</button>
+      </form>
+    </div>
   )
 
   const handleClick = () => (
-      setUser(null),
-      window.localStorage.clear()
+    setUser(null),
+    window.localStorage.clear()
   )
 
 
@@ -157,12 +157,12 @@ const updateBlog = (id) => {
     const showWhenVisible = { display: blogFormVisible ? '' : 'none' }
 
     return(
-    <div>
-      <p> {user.name} logged in </p> 
-      <button onClick={handleClick}> Log out! </button>
-      <br/>
-      <br/>
-      <div style={hideWhenVisible}>
+      <div>
+        <p> {user.name} logged in </p>
+        <button onClick={handleClick}> Log out! </button>
+        <br/>
+        <br/>
+        <div style={hideWhenVisible}>
           <button onClick={() => setBlogFormVisible(true)}>Add Blog!</button>
         </div>
         <div style={showWhenVisible}>
@@ -170,13 +170,13 @@ const updateBlog = (id) => {
             addBlog={addBlog}
           />
 
-        <button onClick={() => setBlogFormVisible(false)}>cancel</button>
-      </div>  
-     <h2>blogs</h2>
-      {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
-        <Blog key={blog.id} blog={blog}  updateBlog={updateBlog} deleteBlog={deleteBlog}/>
-      )}
-    </div>
+          <button onClick={() => setBlogFormVisible(false)}>cancel</button>
+        </div>
+        <h2>blogs</h2>
+        {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
+          <Blog key={blog.id} blog={blog}  updateBlog={updateBlog} deleteBlog={deleteBlog}/>
+        )}
+      </div>
     )
   }
 
@@ -184,10 +184,10 @@ const updateBlog = (id) => {
   return (
     <div>
       <Notification message={errorMessage} />
-      {user === null ? 
-      loginForm() :
-      blogsSchedule()
-    
+      {user === null ?
+        loginForm() :
+        blogsSchedule()
+
       }
     </div>
   )

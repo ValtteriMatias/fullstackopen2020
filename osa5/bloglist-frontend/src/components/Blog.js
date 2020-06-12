@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 
 const Blog = ({ blog, updateBlog, deleteBlog }) => {
 
   const [show, setShow] = useState(false)
-  
+
   const showWhenVisible = { display: show ? '' : 'none' }
 
   const label = show ? 'Hide' : 'Show'
@@ -33,10 +33,10 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
       {blog.title} <button onClick={() => {setShow(!show)}}> {label}</button>
       <div style={showWhenVisible}>
         {blog.author} <br/> {blog.url} <br/>{blog.likes} <button onClick={update}> Like </button> <br/> <br/> <button onClick={delBlog}> Delete </button>
-       </div>
+      </div>
     </div>
   )
-  
+
 }
 
 Blog.propTypes = {

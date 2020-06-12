@@ -1,15 +1,15 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 const BlogForm = ({
-    addBlog
+  addBlog
 }) => {
 
-const [newBlogTitle, setNewBlogTitle] = useState('')
-const [newBlogAuthor, setNewBlogAuthor] = useState('')
-const [newBlogUrl, setNewBlogUrl] = useState('')
-const [newBlogLikes, setNewBlogLikes] = useState(0)
+  const [newBlogTitle, setNewBlogTitle] = useState('')
+  const [newBlogAuthor, setNewBlogAuthor] = useState('')
+  const [newBlogUrl, setNewBlogUrl] = useState('')
+  const [newBlogLikes, setNewBlogLikes] = useState(0)
 
-const handleBlogTitleChange = (event) => {
+  const handleBlogTitleChange = (event) => {
     setNewBlogTitle(event.target.value)
   }
 
@@ -35,44 +35,44 @@ const handleBlogTitleChange = (event) => {
     }
     addBlog(blogObject)
     setNewBlogAuthor('')
-        setNewBlogLikes(0)
-        setNewBlogUrl('')
-        setNewBlogTitle('')
+    setNewBlogLikes(0)
+    setNewBlogUrl('')
+    setNewBlogTitle('')
 
-}
+  }
 
-return (
-  <div>
-    <form onSubmit={createBlog}>
-            <p>Title</p>
-                <input
-                    value={newBlogTitle}
-                    onChange={handleBlogTitleChange}
-                /> 
-            <p>Author</p>
-                <input
-                    value={newBlogAuthor}
-                    onChange={handleBlogAuthorChange}
-                /> 
-            <p>Url</p>
-                <input
-                    value={newBlogUrl}
-                    onChange={handleBlogUrlChange}
-                /> 
-            <p>Likes</p>
-                <input
-                    value={newBlogLikes}
-                    onChange={handleBlogLikesChange}
-                />
-            <br/>
-            <br/>
+  return (
+    <div>
+      <form onSubmit={createBlog}>
+        <p>Title</p>
+        <input
+          value={newBlogTitle}
+          onChange={handleBlogTitleChange}
+        />
+        <p>Author</p>
+        <input
+          value={newBlogAuthor}
+          onChange={handleBlogAuthorChange}
+        />
+        <p>Url</p>
+        <input
+          value={newBlogUrl}
+          onChange={handleBlogUrlChange}
+        />
+        <p>Likes</p>
+        <input
+          value={newBlogLikes}
+          onChange={handleBlogLikesChange}
+        />
+        <br/>
+        <br/>
         <button type="submit">save</button>
-    </form>  
-  </div>    
+      </form>
+    </div>
   )
 }
 
 
-  export default BlogForm
+export default BlogForm
 
 
