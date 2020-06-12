@@ -54,3 +54,27 @@ test('clicking the button shows rest of info', async () => {
   
   
   })
+
+
+  test('if liked twice the button eventhandler is called twice', async () => {
+    const blog = {
+        title: 'this is the title of the test blog component',
+        author: 'this is the author of the test blog component',
+        url:'www.testurl.com',
+        likes: 3 
+      }
+
+    const mockHandler = jest.fn()
+  
+    const component = render(
+      <Blog blog={blog} updateBlog={mockHandler} />
+    )
+
+
+    const button = component.getByText('Like')
+    fireEvent.click(button)
+    fireEvent.click(button)
+    
+    expect(mockHandler.mock.calls).toHaveLength(2)
+  
+  })
