@@ -1,9 +1,9 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { render } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import Blog from './Blog'
 
-test('renders content', () => {
+test('renders title and author', () => {
   const blog = {
     title: 'this is the title of the test blog component',
     author: 'this is the author of the test blog component',
@@ -24,11 +24,33 @@ test('renders content', () => {
     'this is the author of the test blog component'
   )
 
-  expect(component.container).toHaveTextContent(
-    'www.testurl.com'
-  )
-
   const element = component.container.querySelector('.allInfo')
-  expect(element).toHaveStyle('display: none')
+  expect(element).toHaveStyle('display:none')
   
 })
+
+
+test('clicking the button shows rest of info', async () => {
+    const blog = {
+        title: 'this is the title of the test blog component',
+        author: 'this is the author of the test blog component',
+        url:'www.testurl.com',
+        likes: 3 
+      }
+  
+    const component = render(
+      <Blog blog={blog} />
+    )
+
+    const element1 = component.container.querySelector('.allInfo')
+    expect(element1).toHaveStyle('display: none')
+
+    const button = component.getByText('Show')
+    fireEvent.click(button)
+  
+
+    const element2 = component.container.querySelector('.allInfo')
+    expect(element2).not.toHaveStyle('display: none')
+  
+  
+  })
