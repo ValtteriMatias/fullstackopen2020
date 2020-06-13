@@ -46,5 +46,24 @@ describe('Blog ', function() {
         cy.contains('save').click()
         cy.contains('a Blog created by cypress')
       })
+
+      describe('and a blog exists', function () {
+        beforeEach(function () {
+          cy.createBlog({ title: 'first blog', auhtor: 'Mr Smith', url: 'www.realwebsite.com', likes: 0 })
+          cy.createBlog({ title: 'second blog', auhtor: 'Mr Jones', url: 'www.miniclip.com', likes: 0 })
+          cy.createBlog({ title: 'third blog', auhtor: 'Mr Trump', url: 'www.cnn.com', likes: 0 })
+        })
+  
+        it('it can be liked', function () {
+          cy.contains('second blog').parent().find('#show-hide-button').click()
+          cy.contains('second blog').parent().find('#likes-output').should('not.contain', 3)
+          cy.contains('second blog').parent().find('#like-button').click()
+          cy.contains('second blog').parent().find('#like-button').click()
+          cy.contains('second blog').parent().find('#like-button').click()
+          cy.contains('second blog').parent().find('#likes-output').should('contain', 3)
+        })
+      })
+
+
     })
   })
