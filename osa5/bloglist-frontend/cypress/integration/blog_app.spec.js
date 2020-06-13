@@ -33,5 +33,18 @@ describe('Blog ', function() {
       cy.contains('Login succesful')
     })
 
-
+    describe('when logged in', function() {
+      beforeEach(function() {
+        cy.login({ username: 'mluukkai', password: 'salainen' })
+      })
+      it('A blog can be created', function() {
+        cy.get('#add-blog').click()
+        cy.get('#title').type('a Blog created by cypress')
+        cy.get('#author').type('Mr Cypress')
+        cy.get('#url').type('www.cypressblog.com')
+        cy.get('#likes').type(0)
+        cy.contains('save').click()
+        cy.contains('a Blog created by cypress')
+      })
+    })
   })
