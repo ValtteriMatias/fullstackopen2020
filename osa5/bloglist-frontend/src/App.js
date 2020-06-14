@@ -159,7 +159,7 @@ const App = () => {
     const showWhenVisible = { display: blogFormVisible ? '' : 'none' }
 
     return(
-      <div>
+      <div id='blogs-schedule' >
         <p> {user.name} logged in </p>
         <button onClick={handleClick}> Log out! </button>
         <br/>

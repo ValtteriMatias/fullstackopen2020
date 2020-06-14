@@ -55,13 +55,24 @@ describe('Blog ', function() {
         })
   
         it('it can be liked', function () {
-          cy.contains('second blog').parent().find('#show-hide-button').click()
-          cy.contains('second blog').parent().find('#likes-output').should('not.contain', 3)
-          cy.contains('second blog').parent().find('#like-button').click()
-          cy.contains('second blog').parent().find('#like-button').click()
-          cy.contains('second blog').parent().find('#like-button').click()
-          cy.contains('second blog').parent().find('#likes-output').should('contain', 3)
+          cy.contains('second blog').contains('Show').click()
+          cy.contains('second blog').find('#likes-output').should('not.contain', 3)
+          cy.contains('second blog').contains('Like').click()
+          cy.contains('second blog').contains('Like').click()
+          cy.contains('second blog').contains('Like').click()
+          cy.contains('second blog').find('#likes-output').should('contain', 3)
         })
+
+        it('it can be deleted', function () {
+          cy.contains('second blog').contains('Show').click()
+          cy.get('#blogs-schedule').should('contain', 'second blog')
+          cy.contains('second blog').contains('Delete').click()
+          cy.get('#blogs-schedule').should('not.contain', 'second blog')
+          
+          
+
+        })
+
       })
 
 
