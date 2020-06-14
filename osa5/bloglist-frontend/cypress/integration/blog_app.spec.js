@@ -69,7 +69,16 @@ describe('Blog ', function() {
           cy.contains('second blog').contains('Delete').click()
           cy.get('#blogs-schedule').should('not.contain', 'second blog')
           
-          
+        })
+
+        it('the blogs are sorted correctly', function () {
+          cy.contains('second blog').contains('Show').click()
+          cy.contains('second blog').contains('Like').click()
+          cy.contains('second blog').contains('Like').click()
+          cy.contains('first blog').contains('Show').click()
+          cy.contains('first blog').contains('Like').click()
+          cy.get('#blogs-schedule').find('#blog').should('contain', 'second blog') // gets the first blog in the list
+
 
         })
 
