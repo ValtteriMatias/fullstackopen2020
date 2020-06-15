@@ -80,7 +80,7 @@ const App = (props) => {
       })
       console.log(errorMessage)
       setNotification(
-        `Added j ${nameObject.name} `
+        `Added ${nameObject.name} `
       )
       setTimeout(() => {
         setErrorMessage(null)
