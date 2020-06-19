@@ -10,7 +10,9 @@ const AnecdoteList = () => {
     const dispatch = useDispatch()
 
     const vote = (id, content) => {
-    dispatch(voteAnecdote(id))
+    const anecdote = anecdotes.find(n => n.id === id)
+    const changedAnecdote = { ...anecdote, votes: anecdote.votes + 1 }
+    dispatch(voteAnecdote(id, changedAnecdote))
     dispatch(voteNotification(content))
     setTimeout(() => {
         dispatch(emptyNotification())
