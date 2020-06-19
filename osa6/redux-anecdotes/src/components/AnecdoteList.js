@@ -17,9 +17,8 @@ const AnecdoteList = () => {
       }, 5000);
 
     }
-    console.log(anecdotes)
-
     const anecdotesToShow = anecdotes.filter(x => x.content.toUpperCase().includes(filter.toUpperCase()) )
+
 
     return(
         <div>

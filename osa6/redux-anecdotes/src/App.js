@@ -10,10 +10,10 @@ import { initializeAnecdotes } from './reducers/anecdoteReducer'
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    console.log('koira')
     anecdoteService
       .getAll().then(anecdotes => dispatch(initializeAnecdotes(anecdotes)))
   }, [dispatch])
+
 
   return (
     <div>
