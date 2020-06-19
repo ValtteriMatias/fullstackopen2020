@@ -18,7 +18,7 @@ const anecdoteReducer = (state = [], action) => {
 
       )
       case 'CREATE':
-        const palautus = [...state, action.data.object]
+        const palautus = [...state, action.data.newAnecdote]
         return palautus
       case 'INIT':
         return action.data
@@ -35,10 +35,13 @@ export const voteAnecdote = (id) => {
   }
 }
 
-export const createAnecdote = (object) => {
-  return {
-    type: 'CREATE',
-    data: { object }
+export const createAnecdote = (content) => {
+  return async dispatch => {
+    const newAnecdote = await anecdoteService.createNew(content)
+    dispatch({
+      type: 'CREATE',
+      data: { newAnecdote }
+    })
   }
 }
 
