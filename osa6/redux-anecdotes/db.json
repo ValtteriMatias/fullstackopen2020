@@ -3,27 +3,32 @@
     {
       "content": "If it hurts, do it more often",
       "id": 1,
-      "votes": 29
+      "votes": 49
     },
     {
       "content": "Adding manpower to a late software project makes it later!",
       "id": 2,
-      "votes": 11
+      "votes": 19
     },
     {
       "content": "Premature optimization is the root of all evil.",
       "id": 3,
-      "votes": 19
+      "votes": 30
     },
     {
       "content": "connect test 1",
       "id": "60472",
-      "votes": 1
+      "votes": 8
     },
     {
       "content": "Connect test 2",
       "id": "72580",
-      "votes": 0
+      "votes": 2
+    },
+    {
+      "content": "clear timer test",
+      "id": "93587",
+      "votes": 4
     }
   ]
 }

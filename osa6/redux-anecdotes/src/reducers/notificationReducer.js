@@ -1,3 +1,5 @@
+var timer;
+
 const notificationReducer = (state = '', action) => {
     switch(action.type) {
       case 'EMPTY':
@@ -22,7 +24,8 @@ const notificationReducer = (state = '', action) => {
         type: 'SET',
         data: { content }
       })
-        setTimeout(() => {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
         dispatch(emptyNotification())
       }, time*1000)
 
