@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom'
+import  { useField } from './hooks'
 
 
 import React, { useState } from 'react'
@@ -83,26 +84,27 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
+  const content = useField('text')
+  const author = useField('text')
+  const info = useField('text')
   const history = useHistory()
 
 
   const handleSubmit = (e) => {
+    console.log(`${content.value}`)
     e.preventDefault()
+    console.log(content)
+    console.log(author)
     props.addNew({
-      content,
-      author,
-      info,
+      content: content.value,
+      author: author.value,
+      info: info.value,
       votes: 0
     })
     history.push('/')
-    props.notify(`a new anecdote ${content} created`)
-
+    props.notify(`a new anecdote ${content.value} created`)
     
-
-    
+  
 
   }
 
@@ -112,15 +114,15 @@ const CreateNew = (props) => {
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+          <input name='content' value={content.value} onChange={content.onChange} />
         </div>
         <div>
           author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+          <input name='author' value={author.value} onChange={author.onChange} />
         </div>
         <div>
           url for more info
-          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+          <input name='info' value={info.value} onChange={info.onChange} />
         </div>
         <button>create</button>
       </form>
@@ -158,6 +160,8 @@ const App = () => {
       }, 10000)
   }
 
+  console.log(anecdotes)
+
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
@@ -185,6 +189,7 @@ const App = () => {
 
   return (
       <div>
+        
       <h1>Software anecdotes</h1>
         <Menu />
         <Notification notification={notification} />
