@@ -91,10 +91,7 @@ const CreateNew = (props) => {
 
 
   const handleSubmit = (e) => {
-    console.log(`${content.value}`)
     e.preventDefault()
-    console.log(content)
-    console.log(author)
     props.addNew({
       content: content.value,
       author: author.value,
@@ -104,14 +101,21 @@ const CreateNew = (props) => {
     history.push('/')
     props.notify(`a new anecdote ${content.value} created`)
     
-  
-
   }
 
+  const handleReset = () => {
+    content.onReset()
+    author.onReset()
+    info.onReset()
+
+  }
+    
+    
+  
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
         <div>
           content
           <input name='content' value={content.value} onChange={content.onChange} />
@@ -124,7 +128,7 @@ const CreateNew = (props) => {
           url for more info
           <input name='info' value={info.value} onChange={info.onChange} />
         </div>
-        <button>create</button>
+        <input type="submit" value="Submit"/><input type="reset" value="Reset" onClick={handleReset}/>
       </form>
     </div>
   )
@@ -159,8 +163,6 @@ const App = () => {
         setNotification('')
       }, 10000)
   }
-
-  console.log(anecdotes)
 
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
