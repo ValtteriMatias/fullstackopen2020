@@ -5,27 +5,26 @@ import loginService from './services/login'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
 import { setNotification } from './reducers/notificationReducer'
+import { createBlog, initializeBlogs } from './reducers/blogReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
 
 
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [blogFormVisible, setBlogFormVisible] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   const dispatch = useDispatch()
+  const blogs = useSelector(state => state.blogs)
 
 
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )
-  }, [])
+    dispatch(initializeBlogs())
+  }, [dispatch])
 
 
   useEffect(() => {
@@ -38,26 +37,23 @@ const App = () => {
   }, [])
 
   const addBlog = (blogObject) => {
-    blogService
-      .create(blogObject)
-      .then(returnedBlog => {
-        setBlogs(blogs.concat(returnedBlog))
-        setBlogFormVisible(false)
-        if (returnedBlog) {
-         dispatch(setNotification(`Blog ${returnedBlog.title} was added succefully`, 5))
-        }
-      })
+    dispatch(createBlog(blogObject))
+    setBlogFormVisible(false)
+    dispatch(setNotification(`Blog ${blogObject.title} was added succefully`, 5))
+        
+      
   }
 
   const deleteBlog = (blog) => {
 
     if (window.confirm('Do you really want to delete ' + blog.title + '?')) {
-      blogService
+      console.log('delete')
+      /* blogService
         .deleteBlog(blog.id)
         .then(
           setBlogs(blogs.filter(n => n.id !== blog.id))
         )
-        dispatch(setNotification(`Deleted ${blog.title} `, 5))
+        dispatch(setNotification(`Deleted ${blog.title} `, 5)) */
 
     }
 
@@ -65,7 +61,8 @@ const App = () => {
 
 
   const updateBlog = (id) => {
-    const blog = blogs.find(n => n.id === id)
+    console.log('update')
+    /* const blog = blogs.find(n => n.id === id)
 
     const changedBlog = { ...blog, likes: blog.likes + 1 }
 
@@ -76,7 +73,7 @@ const App = () => {
       })
       .catch(() => {
         dispatch(setNotification(`Note '${blog.content}' was already removed from server`, 5))
-      })
+      }) */
   }
 
 
