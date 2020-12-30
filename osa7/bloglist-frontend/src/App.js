@@ -5,10 +5,8 @@ import loginService from './services/login'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
 import { setNotification } from './reducers/notificationReducer'
-import { createBlog, initializeBlogs } from './reducers/blogReducer'
+import { voteBlog, removeBlog, createBlog, initializeBlogs } from './reducers/blogReducer'
 import { useDispatch, useSelector } from 'react-redux'
-
-
 
 
 const App = () => {
@@ -45,15 +43,12 @@ const App = () => {
   }
 
   const deleteBlog = (blog) => {
+    console.log(blog)
 
     if (window.confirm('Do you really want to delete ' + blog.title + '?')) {
       console.log('delete')
-      /* blogService
-        .deleteBlog(blog.id)
-        .then(
-          setBlogs(blogs.filter(n => n.id !== blog.id))
-        )
-        dispatch(setNotification(`Deleted ${blog.title} `, 5)) */
+      dispatch(removeBlog(blog.id))
+      dispatch(setNotification(`Deleted ${blog.title} `, 5))
 
     }
 
@@ -61,19 +56,11 @@ const App = () => {
 
 
   const updateBlog = (id) => {
-    console.log('update')
-    /* const blog = blogs.find(n => n.id === id)
+    const blog = blogs.find(n => n.id === id)
 
     const changedBlog = { ...blog, likes: blog.likes + 1 }
 
-    blogService
-      .update(id, changedBlog)
-      .then(returnedBlog => {
-        setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
-      })
-      .catch(() => {
-        dispatch(setNotification(`Note '${blog.content}' was already removed from server`, 5))
-      }) */
+    dispatch(voteBlog(id, changedBlog))
   }
 
 
